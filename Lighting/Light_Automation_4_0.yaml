@@ -1,0 +1,18 @@
+alias: Light Automation 4.0
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - number.opt3001_illuminance_calibrated # once light sensor being trig
+conditions: []
+actions:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - entity_id: light.a2 # change the brightness of A2 Smart light bulb
+    data_template:
+      brightness: "{{states('number.a2_brightness_change_2_0')}}" # Called this number template to run an automation
+    action: light.turn_on # make sure the light is turn on
+mode: single

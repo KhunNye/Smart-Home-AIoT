@@ -1,0 +1,28 @@
+alias: Co2 Fan ON
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - sensor.co2_box_carbon_dioxide
+conditions:
+  - condition: numeric_state
+    entity_id: sensor.co2_box_carbon_dioxide
+    above: 1000
+  - condition: state
+    entity_id: switch.sonoff_100129d3ae_1
+    state: "off"
+actions:
+  - type: turn_on
+    device_id: 8b0d5c7b9b6801765eb406f4406423e6
+    entity_id: 262ae86f989865d35f5b29e6cc62ff30
+    domain: switch
+  - action: tts.speak
+    metadata: {}
+    data:
+      cache: true
+      media_player_entity_id: media_player.h_ngthmaangaan
+      message: เปิดพัดลม
+      language: th
+    target:
+      entity_id: tts.google_translate_en_com
+mode: single

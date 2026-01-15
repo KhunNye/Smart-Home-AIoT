@@ -1,0 +1,9 @@
+{# Calibrate illuminance measure by OPT3001 sensor, follow the MinoltaT10A Lux meter (grade lab lux meter).
+
+apply {y = 0.819303779x + 10.41022899} derived by linear regression with datasets of light measure experiment.
+#}
+
+{% set raw = states('sensor.ambient_light_sensor_opt3001_illuminance') | float(0) %}
+{% set a2_opt3001 = states('number.led_lux_opt3001_light_sensor') | float(0) %}
+{% set a2_minolta = states('number.led_lux_minolta_t_10a_lux_meter') | float(0) %}
+{{ (((raw - a2_opt3001) - 10.41022899) / 0.819303779) + a2_minolta | int }}

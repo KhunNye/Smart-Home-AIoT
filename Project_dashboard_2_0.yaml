@@ -1,0 +1,1184 @@
+views:
+  - title: Device
+    type: sections
+    cards: []
+    subview: false
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Time
+            heading_style: title
+          - clock_size: large
+            show_seconds: true
+            type: clock
+            grid_options:
+              columns: 12
+              rows: 4
+          - initial_view: dayGridMonth
+            type: calendar
+            entities:
+              - calendar.smart_home_aiot
+            grid_options:
+              columns: 12
+              rows: 8
+          - type: custom:weather-card
+            entity: weather.forecast_baan
+            grid_options:
+              columns: 12
+              rows: 4
+            forecast: true
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Temperature and Humidity
+          - type: gauge
+            entity: sensor.temperature_and_humidity_sensor_temperature
+            theme: visionos
+            name: Temperature
+            needle: false
+            grid_options:
+              columns: 12
+              rows: 4
+          - type: gauge
+            entity: sensor.temperature_and_humidity_sensor_humidity
+            name: Humidity
+            grid_options:
+              columns: 12
+              rows: 4
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading: Light
+            heading_style: title
+            icon: mdi:lamp-outline
+          - type: light
+            entity: light.tt1
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: light
+            entity: light.a2
+            grid_options:
+              columns: 6
+              rows: auto
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Air quality
+          - type: gauge
+            entity: sensor.pth_9cw_qc_carbon_dioxide
+            severity:
+              green: 100
+              yellow: 1500
+              red: 2000
+            needle: false
+            max: 2000
+            min: 0
+            theme: Graphite Light
+            name: Indoor carbondioxide
+            grid_options:
+              columns: 12
+              rows: 4
+          - type: gauge
+            entity: sensor.pth_9cw_qc_2_carbon_dioxide
+            theme: Graphite
+            max: 2000
+            min: 0
+            severity:
+              green: 1000
+              yellow: 1500
+              red: 2000
+            name: Outdoor carbondioxide
+            grid_options:
+              columns: 12
+              rows: 4
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Hall switch
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d3ae_1
+            show_state: false
+            name: I
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d3ae_2
+            show_state: false
+            name: II
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d3ae_3
+            show_state: false
+            name: III
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d3ae_3
+            show_state: false
+            name: IV
+      - type: grid
+        cards:
+          - type: heading
+            heading: Front switch
+            heading_style: title
+            icon: ''
+            grid_options:
+              columns: full
+              rows: 1
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d334_1
+            show_state: false
+            name: I
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d334_2
+            show_state: false
+            name: II
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d334_3
+            show_state: false
+            name: III
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129d334_4
+            show_state: false
+            name: IV
+      - type: grid
+        cards:
+          - type: heading
+            heading: Bedroom switch
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129e030_1
+            show_state: false
+            name: I
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129e030_2
+            show_state: false
+            name: II
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129e030_3
+            show_state: false
+            name: III
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_100129e030_4
+            show_state: false
+            name: IV
+      - type: grid
+        cards:
+          - type: heading
+            heading: Living room switch
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_10008f87a8
+            show_state: false
+            name: I
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.sonoff_1000904d2f
+            show_state: false
+            name: II
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: AC controller
+          - show_name: false
+            show_icon: true
+            type: button
+            entity: input_boolean.idea_lab_ac_switch
+            show_state: true
+            grid_options:
+              columns: 9
+              rows: 3
+            icon: mdi:power
+          - features:
+              - style: slider
+                type: numeric-input
+            type: tile
+            entity: input_number.ac_temp
+            features_position: bottom
+            vertical: false
+            show_entity_picture: false
+            hide_state: false
+            grid_options:
+              columns: 15
+              rows: 2
+            state_content: state
+          - features:
+              - type: select-options
+            type: tile
+            entity: input_select.ac_fan_speed
+            features_position: inline
+            vertical: false
+            grid_options:
+              columns: 15
+              rows: 1
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Servo เปิดปิดไฟห้อง
+            heading_style: title
+            icon: mdi:engine
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: button.lux_meter_turn_counterclockwise
+            icon: mdi:ceiling-light
+            show_state: false
+            tap_action:
+              action: perform-action
+              perform_action: button.press
+              target:
+                entity_id: button.lux_meter_turn_counterclockwise
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: button.lux_meter_turn_clockwise
+            icon: mdi:ceiling-light-outline
+            tap_action:
+              action: perform-action
+              perform_action: button.press
+              target:
+                entity_id: button.lux_meter_turn_clockwise
+    max_columns: 4
+    theme: visionos
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: >-
+          # Hello {{ user }}
+
+          Welcome to device dashboard. this dashboard mainly activate or config
+          device ✨
+  - type: sections
+    path: automation
+    theme: Graphite
+    title: Automation
+    cards: []
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Automation Air-Quality
+            heading_style: title
+            icon: mdi:air-filter
+          - chart_type: line
+            period: 5minute
+            type: statistics-graph
+            entities:
+              - sensor.pth_9cw_qc_carbon_dioxide
+              - sensor.pth_9cw_qc_2_carbon_dioxide
+            stat_types:
+              - mean
+            hide_legend: false
+            days_to_show: 1
+            logarithmic_scale: false
+            grid_options:
+              columns: 48
+              rows: 5
+          - type: custom:modern-circular-gauge
+            secondary:
+              adaptive_state_color: false
+            tertiary: {}
+            max: 2200
+            min: 0
+            needle: true
+            smooth_segments: true
+            segments:
+              - color:
+                  - 0
+                  - 255
+                  - 17
+                from: 0
+              - color:
+                  - 251
+                  - 255
+                  - 0
+                from: 1000
+              - color:
+                  - 255
+                  - 0
+                  - 0
+                from: 1500
+              - color:
+                  - 184
+                  - 0
+                  - 0
+                from: 2000
+            adaptive_icon_color: true
+            adaptive_state_color: false
+            name: Indoor Carbondioxide
+            grid_options:
+              columns: 12
+              rows: 4
+            entity: sensor.co2_box_carbon_dioxide
+          - type: custom:modern-circular-gauge
+            entity: sensor.pth_9cw_qc_2_carbon_dioxide
+            secondary:
+              adaptive_state_color: false
+            tertiary: {}
+            max: 2200
+            min: 0
+            needle: true
+            smooth_segments: true
+            segments:
+              - color:
+                  - 0
+                  - 255
+                  - 17
+                from: 0
+              - color:
+                  - 251
+                  - 255
+                  - 0
+                from: 1000
+              - color:
+                  - 255
+                  - 0
+                  - 0
+                from: 1500
+              - color:
+                  - 184
+                  - 0
+                  - 0
+                from: 2000
+            adaptive_icon_color: true
+            adaptive_state_color: false
+            grid_options:
+              columns: 12
+              rows: 4
+            name: Outdoor Carbondioxide
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_boolean.automation_co2_lab
+            grid_options:
+              columns: 12
+              rows: 4
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Automation Light
+            heading_style: title
+            icon: mdi:floor-lamp
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: automation.light_automation_4_0
+            grid_options:
+              columns: 12
+              rows: 4
+          - type: custom:modern-circular-gauge
+            entity: sensor.ambient_light_sensor_opt3001_illuminance
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: OPT3001 Illumiance
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: number.opt3001_illuminance_calibrated
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:progress-wrench
+            unit: lux
+            name: OPT3001 Illuminance calibrated
+          - type: custom:modern-circular-gauge
+            entity: sensor.ambient_light_sensor_minolta_t_10_lux_meter
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: (Unused)MINOLTA T-10 Lux meter
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: number.a2_brightness_change_2_0
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            segments: []
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 255
+            min: 0
+            icon: mdi:lightbulb
+          - features:
+              - style: slider
+                type: numeric-input
+              - type: numeric-input
+                style: buttons
+            type: tile
+            entity: input_number.desired_brightness
+            features_position: bottom
+            vertical: false
+            show_entity_picture: false
+            hide_state: false
+            grid_options:
+              columns: 30
+              rows: 4
+            state_content: state
+          - type: light
+            entity: light.a2
+            grid_options:
+              columns: 6
+              rows: 4
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Automation Light Data View
+            heading_style: title
+            icon: mdi:floor-lamp
+          - chart_type: line
+            period: 5minute
+            type: statistics-graph
+            entities:
+              - sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
+              - sensor.luminance_sensor_illuminance
+              - sensor.ambient_light_sensor_ambient_light_sensor_bh1750
+              - sensor.ambient_light_sensor_ambient_light_sensor_opt3001
+              - sensor.ambient_light_sensor_minolta_t_10_lux_meter
+            stat_types:
+              - mean
+            days_to_show: 1
+            hide_legend: false
+            logarithmic_scale: false
+            grid_options:
+              columns: full
+              rows: 6
+          - type: light
+            entity: light.a1
+            grid_options:
+              columns: 12
+              rows: 4
+          - type: light
+            entity: light.a2
+            grid_options:
+              columns: 12
+              rows: 4
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: automation.light_down_every_5_sec_and_up
+            grid_options:
+              columns: 6
+              rows: 4
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: automation.light_up_every_5_sec_and_down
+            grid_options:
+              columns: 6
+              rows: 4
+          - type: custom:modern-circular-gauge
+            entity: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: Xiaomi light detector
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+          - type: custom:modern-circular-gauge
+            entity: sensor.luminance_sensor_illuminance
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: Zigebee Ambient light sensor
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: sensor.ambient_light_sensor_ambient_light_sensor_bh1750
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: BH1750 Ambient Light Sensor
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: sensor.ambient_light_sensor_opt3001_illuminance
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: OPT3001 Ambient Light Sensor
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: sensor.ambient_light_sensor_tes_1332a_lux_meter
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: TES 1332A Lux meter
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: sensor.ambient_light_sensor_minolta_t_10_lux_meter
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            name: MINOLTA T-10 Lux meter Lux meter
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: number.led_lux_minolta_t_10a_lux_meter
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: number.led_lux_opt3001_light_sensor
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - type: custom:modern-circular-gauge
+            entity: number.a2_brightness_change_2_0
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: automation.light_automation_4_0
+            grid_options:
+              columns: 12
+              rows: 4
+          - type: custom:modern-circular-gauge
+            entity: number.opt3001_illuminance_calibrated
+            secondary: {}
+            tertiary: {}
+            needle: false
+            smooth_segments: false
+            segments:
+              - from: 400
+                color:
+                  - 112
+                  - 255
+                  - 141
+              - color:
+                  - 255
+                  - 112
+                  - 112
+                from: 600
+              - from: 0
+                color:
+                  - 142
+                  - 251
+                  - 244
+            show_state: true
+            show_icon: true
+            show_unit: true
+            show_header: true
+            max: 800
+            min: 0
+            icon: mdi:brightness-5
+            unit: lux
+          - features:
+              - style: slider
+                type: numeric-input
+              - type: numeric-input
+                style: buttons
+            type: tile
+            entity: input_number.desired_brightness
+            features_position: bottom
+            vertical: false
+            show_entity_picture: false
+            hide_state: false
+            grid_options:
+              columns: 18
+              rows: 3
+            state_content: state
+          - type: tile
+            entity: binary_sensor.human_presence_sensor_occupancy
+            features_position: bottom
+            vertical: true
+            hide_state: false
+            show_entity_picture: false
+            grid_options:
+              columns: 12
+              rows: 3
+        column_span: 4
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: >-
+          # Hello {{ user }}
+
+          This is Automation dashboard. Here showed data and button for
+          automation ✨
+    max_columns: 4
+  - type: sections
+    max_columns: 4
+    icon: ''
+    path: ai
+    sections:
+      - type: grid
+        cards:
+          - features:
+              - style: slider
+                type: numeric-input
+            type: tile
+            entity: input_number.guide_temp
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 21
+              rows: 2
+            name: P Oil Temp
+          - features:
+              - type: select-options
+            type: tile
+            entity: input_select.guide_fan_speed
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 15
+              rows: 2
+            name: P Oil Speed
+          - features:
+              - style: slider
+                type: numeric-input
+            type: tile
+            entity: input_number.tree_temp
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 21
+              rows: 2
+            name: Arm Temp
+          - features:
+              - type: select-options
+            type: tile
+            entity: input_select.tree_fan_speed
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 15
+              rows: 2
+            name: Arm Speed
+          - features:
+              - style: slider
+                type: numeric-input
+            type: tile
+            entity: input_number.nire_temp
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 21
+              rows: 2
+            name: Jakk Temp
+          - features:
+              - type: select-options
+            type: tile
+            entity: input_select.nire_fan_speed
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 15
+              rows: 2
+            name: Jakk Speed
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:gesture-tap-button
+            heading: Crop detect photo
+            heading_style: title
+          - type: custom:refreshable-picture-card
+            title: ''
+            refresh_interval: 30
+            url: /local/unknown.jpg
+            entity: ''
+            attribute: ''
+            noMargin: true
+            tap_action:
+              action: none
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:book
+            heading_style: title
+            heading: Member in AI Button
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_button.is_guide
+            grid_options:
+              columns: 12
+              rows: 4
+            show_state: true
+            tap_action:
+              action: toggle
+            name: P Oil
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_button.is_tree
+            grid_options:
+              columns: 12
+              rows: 4
+            show_state: true
+            tap_action:
+              action: toggle
+            name: Arm
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_button.is_nire
+            grid_options:
+              columns: 12
+              rows: 4
+            show_state: true
+            tap_action:
+              action: toggle
+            name: JAKK
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Switch and button
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_boolean.aiot_switch
+            show_state: true
+            grid_options:
+              columns: 12
+              rows: 4
+          - show_name: true
+            show_icon: true
+            type: button
+            name: Reset Face-recognition
+            icon: mdi:face-recognition
+            tap_action:
+              action: toggle
+            entity: input_boolean.are_you_sure
+            show_state: false
+            grid_options:
+              columns: 12
+              rows: 4
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_button.reset_face_recognition
+            show_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id:
+                  - input_button.reset_face_recognition
+              data: {}
+            grid_options:
+              columns: 12
+              rows: 4
+            visibility:
+              - condition: state
+                entity: input_boolean.are_you_sure
+                state: 'on'
+            name: Are you sure?
+            icon: mdi:help-rhombus-outline
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_boolean.notification_residents
+            grid_options:
+              columns: 18
+              rows: 3
+            icon: mdi:account-group
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: input_boolean.unknows_notification
+            show_state: true
+            grid_options:
+              columns: 18
+              rows: 3
+          - type: tile
+            entity: binary_sensor.human_presence_sensor_occupancy
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 42
+              rows: 2
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:air-conditioner
+            heading: Air conditioner controller
+            heading_style: title
+          - show_name: false
+            show_icon: true
+            type: button
+            entity: input_boolean.idea_lab_ac_switch
+            icon: mdi:power
+            show_state: true
+            grid_options:
+              columns: 6
+              rows: 2
+          - features:
+              - style: slider
+                type: numeric-input
+            type: tile
+            entity: input_number.ac_temp
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 21
+              rows: 2
+          - features:
+              - type: select-options
+            type: tile
+            entity: input_select.ac_fan_speed
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 9
+              rows: 2
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:camera-account
+            heading: Image processing
+            heading_style: title
+          - type: custom:refreshable-picture-card
+            title: ''
+            refresh_interval: 1
+            url: /local/face_detect.jpg
+            entity: ''
+            attribute: ''
+            noMargin: true
+            tap_action:
+              action: none
+            grid_options:
+              columns: full
+              rows: 8
+        column_span: 4
+    cards: []
+    title: AI for Smarthome
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Hello {{ user }}
+          This section cotrol AI for Smart home ✨
+    theme: Graphite
+  - type: panel
+    path: camera
+    title: Camera
+    icon: ''
+    theme: visionos
+    cards:
+      - type: custom:advanced-camera-card
+        cameras:
+          - camera_entity: camera.smarthomeaiot_tapoc200_hd_stream

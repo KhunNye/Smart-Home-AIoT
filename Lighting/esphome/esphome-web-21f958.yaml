@@ -1,0 +1,214 @@
+esphome:
+  name: ambient_light_sensor
+  friendly_name: Ambient light sensor
+  min_version: 2024.11.0
+  name_add_mac_suffix: false
+
+external_components:
+  - source:
+      type: local
+      path: custom_components
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "qlk8c3PoiBIwdJglMN0yy5g1bJV6bCZ6ndfM8Z0CitU="
+
+ota:
+  - platform: esphome
+    password: "2d35c6c00b6475624933aa9505e29b88"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Illuminance-Sensor"
+    password: "TMOLeb6K9AmI"
+
+web_server:
+  port: 80
+
+# I²C Configuration
+i2c:
+  - id: bus_a
+    sda: 9
+    scl: 10
+    scan: true  # Auto-detects the sensor
+
+output:
+  - platform: gpio
+    pin: GPIO38  # <-- Try this first; change if needed
+    id: onboard_led
+
+light:
+  - platform: binary
+    name: "Onboard LED"
+    output: onboard_led
+    restore_mode: ALWAYS_OFF
+
+# BH1750 Light Sensor
+sensor:
+  - platform: bh1750
+    i2c_id: bus_a
+    name: "Ambient Light Sensor (BH1750)"
+    address: 0x23
+    update_interval: 1s
+    accuracy_decimals: 2
+
+  - platform: opt3001
+    i2c_id: bus_a
+    illuminance:
+      name: "OPT3001 Illuminance"
+    address: 0x44
+    update_interval: 1s
+
+  - platform: adc
+    pin: GPIO01
+    name: "TES 1332A Lux meter"
+    update_interval: 1s
+    attenuation: 6db  # For up to ~1.95V (suitable for TES-1332A)
+    samples: 100      # Increased to further smooth readings
+    filters:
+      - sliding_window_moving_average:
+          window_size: 20  # Increased for better smoothing
+          send_every: 1
+      - lambda: |-
+          // Convert voltage (V) to lux: 1V = 1000 lux
+          return x * 1000.0;
+    unit_of_measurement: "lx"
+    accuracy_decimals: 1
+
+  - platform: adc
+    pin: GPIO02
+    name: "MINOLTA T-10 Lux meter"
+    update_interval: 1s
+    attenuation: 11db  # for up to ~3.6V
+    samples: 50
+    filters:
+      - sliding_window_moving_average:
+          window_size: 15  # Size of the moving average
+          send_every: 1    # Send updated value every time
+      - lambda: |-
+          // Convert voltage (V) to lux: 1V = 1000 lux
+          return x * 1000.0;
+    unit_of_measurement: "lx"
+    accuracy_decimals: 1
+
+#ESP32 --- ULN2003
+#GND   --- -
+#VIN   --- +
+#D27   --- IN1
+#D26   --- IN2
+#D25   --- IN3
+#D13   --- IN4
+
+stepper:
+  - platform: uln2003
+    id: my_stepper
+    pin_a: GPIO15
+    pin_b: GPIO16
+    pin_c: GPIO17
+    pin_d: GPIO18
+    max_speed: 384 steps/s
+
+    #Optional:
+    acceleration: inf
+    deceleration: inf
+    sleep_when_done: True
+
+switch:
+  - platform: template
+    name: "Stop Stepper Control"
+    id: stop_stepper
+    optimistic: true
+
+button:
+  - platform: template
+    name: "Turn 360°"
+    on_press:
+      then:       
+        - logger.log: "Turn 360°"  
+        - stepper.set_target:
+            id: my_stepper
+            target: -46080
+
+  - platform: template
+    name: "Set Zero"
+    on_press:
+      then:
+        - logger.log: "Set Zero"
+        - stepper.report_position:
+            id: my_stepper
+            position: 0          
+
+  - platform: template
+    name: "Go to ZERO"
+    on_press:
+      then:         
+        - logger.log: "Go to Zero"
+        - stepper.set_target:
+            id: my_stepper
+            target: 0
+
+  - platform: template
+    name: "Start Stepper Control"
+    on_press:    
+      then:
+        - logger.log: "Stepper Control Started"
+        - switch.turn_off: stop_stepper  # Make sure stop is off when starting
+        - while:
+            condition:
+              lambda: |-
+                return !id(stop_stepper).state;
+            then:
+              - while:
+                  condition:
+                    lambda: |-
+                      return id(my_stepper).current_position > -11520 && !id(stop_stepper).state;
+                  then:
+                    - stepper.set_target:
+                        id: my_stepper
+                        target: !lambda "return id(my_stepper).current_position - 640;"
+                    - delay: 5s
+              - while:
+                  condition:
+                    lambda: |-
+                      return id(my_stepper).current_position < 0 && !id(stop_stepper).state;
+                  then:
+                    - stepper.set_target:
+                        id: my_stepper
+                        target: !lambda "return id(my_stepper).current_position + 640;"
+                    - delay: 5s
+        - logger.log: "Stepper Control Stopped"
+
+
+
+cover:
+  - platform: template
+    name: "Template Cover"
+    open_action:  
+      - stepper.set_target:
+          id: my_stepper
+          target: 0
+    close_action:
+      - stepper.set_target:
+          id: my_stepper
+          target: 11520
+    stop_action:   
+      - stepper.set_target:
+          id: my_stepper
+          target: !lambda |-
+            return id(my_stepper).current_position;
+    optimistic: true
+
+captive_portal:

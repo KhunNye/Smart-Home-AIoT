@@ -1,0 +1,89 @@
+esphome:
+  name: lux-meter
+  friendly_name: Lux meter
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "IDmubGaIFhxOl/iG/1ig9VuZgaJ/A4j8gEb4BsqJyk4="
+
+ota:
+  - platform: esphome
+    password: "4a755d7c8d0ef44ac172525d66c63714"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Lux-Meter Fallback Hotspot"
+    password: "COMZU8gEhCFD"
+
+web_server:
+  port: 81
+
+output:
+  - platform: ledc
+    id: sg90_pwm
+    pin: GPIO4  # Change this to your GPIO pin
+    frequency: 50 Hz  # Standard for servos
+
+servo:
+  - id: sg90_servo
+    output: sg90_pwm
+    min_level: 2.5%
+    max_level: 12.5%
+
+button:
+  - platform: template
+    name: "Turn Clockwise"
+    on_press:
+      then:
+        - servo.write:
+            id: sg90_servo
+            level: 0.5  # Spin Clockwise
+        - delay: 400ms
+        - servo.write:
+            id: sg90_servo
+            level: 0  # Stop
+
+  - platform: template
+    name: "Turn Counterclockwise"
+    on_press:
+      then:
+        - servo.write:
+            id: sg90_servo
+            level: -0.5  # Spin Counterclockwise
+        - delay: 400ms
+        - servo.write:
+            id: sg90_servo
+            level: 0  # Stop
+
+cover:
+  - platform: template
+    name: "Template Cover"
+    open_action:  
+      - servo.write:
+          id: sg90_servo
+          level: 0.5  # Spin Clockwise
+    close_action:
+      - servo.write:
+          id: sg90_servo
+          level: -0.5  # Spin Clockwise
+    stop_action:   
+      - servo.write:
+          id: sg90_servo
+          level: 0  # Spin Clockwise
+    optimistic: true
+
+captive_portal:
+    
