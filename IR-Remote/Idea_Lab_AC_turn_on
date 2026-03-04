@@ -1,0 +1,20 @@
+alias: Idea Lab AC turn on
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - input_boolean.idea_lab_ac_switch
+    from: "off"
+    to: "on"
+conditions: []
+actions:
+  - action: remote.send_command
+    metadata: {}
+    data:
+      command: >
+        {{ states('input_select.ac_fan_speed') }}_{{
+        states('input_number.ac_temp') | int }}C
+      device: Air conditioner in project room
+    target:
+      entity_id: remote.multimode_gateway_with_ir_remote
+mode: single

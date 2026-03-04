@@ -1,0 +1,48 @@
+alias: AC Automation 2.0
+description: ""
+triggers:
+  - entity_id:
+      - input_select.ac_fan_speed
+    trigger: state
+  - entity_id:
+      - input_number.ac_temp
+    trigger: state
+conditions: []
+actions:
+  - action: remote.send_command
+    metadata: {}
+    data:
+      device: Air conditioner in project room
+      command: >
+        {{ states('input_select.ac_fan_speed') }}_{{
+        states('input_number.ac_temp') | int }}C
+    target:
+      entity_id: remote.multimode_gateway_with_ir_remote
+      device_id: ef370aea51ab5a821c253763e196e7e6
+  - action: automation.turn_off
+    metadata: {}
+    data:
+      stop_actions: true
+    target:
+      entity_id: automation.idea_lab_ac_turn_on
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 500
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.idea_lab_ac_switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 500
+  - action: automation.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: automation.idea_lab_ac_turn_on
+mode: single

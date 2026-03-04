@@ -1,0 +1,18 @@
+alias: Idea Lab AC turn off
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - input_boolean.idea_lab_ac_switch
+    from: "on"
+    to: "off"
+conditions: []
+actions:
+  - action: remote.send_command
+    metadata: {}
+    data:
+      device: Idea Lab AC
+      command: turn off
+    target:
+      entity_id: remote.multimode_gateway_with_ir_remote
+mode: single
